@@ -1,14 +1,18 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
-
 namespace API.Data.Migrations
 {
     public partial class ExtendedUserEntity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<string>(
+                name: "City",
+                table: "Users",
+                type: "TEXT",
+                nullable: true);
+
             migrationBuilder.AddColumn<string>(
                 name: "Country",
                 table: "Users",
@@ -48,7 +52,7 @@ namespace API.Data.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "KnowAs",
+                name: "KnownAs",
                 table: "Users",
                 type: "TEXT",
                 nullable: true);
@@ -61,7 +65,7 @@ namespace API.Data.Migrations
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AddColumn<string>(
-                name: "Looking",
+                name: "LookingFor",
                 table: "Users",
                 type: "TEXT",
                 nullable: true);
@@ -75,7 +79,7 @@ namespace API.Data.Migrations
                     Url = table.Column<string>(type: "TEXT", nullable: true),
                     IsMain = table.Column<bool>(type: "INTEGER", nullable: false),
                     PublicId = table.Column<string>(type: "TEXT", nullable: true),
-                    AppUserId = table.Column<int>(type: "INTEGER", nullable: true)
+                    AppUserId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,7 +88,8 @@ namespace API.Data.Migrations
                         name: "FK_Photos_Users_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -99,6 +104,10 @@ namespace API.Data.Migrations
                 name: "Photos");
 
             migrationBuilder.DropColumn(
+                name: "City",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
                 name: "Country",
                 table: "Users");
 
@@ -123,7 +132,7 @@ namespace API.Data.Migrations
                 table: "Users");
 
             migrationBuilder.DropColumn(
-                name: "KnowAs",
+                name: "KnownAs",
                 table: "Users");
 
             migrationBuilder.DropColumn(
@@ -131,7 +140,7 @@ namespace API.Data.Migrations
                 table: "Users");
 
             migrationBuilder.DropColumn(
-                name: "Looking",
+                name: "LookingFor",
                 table: "Users");
         }
     }
